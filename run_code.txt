@@ -1,0 +1,146 @@
+# test different predation scenarios
+
+# Change this to code where stored in computer
+cd ~/Documents/work/modelling/PAR_growth/share/
+
+# build growth_pars.cpp and run_pars.cpp
+g++ -o growth_info growth_info.cpp growthfun.cpp
+g++ -o run_sim run_sim_all.cpp growthfun.cpp
+
+# Move files and change working directory to where store output (folder called "output")
+mv growth_info run_sim ~/Documents/work/modelling/PAR_growth/share/output
+cd ~/Documents/work/modelling/PAR_growth/share/output
+
+# run code with input parameters
+
+# NO ENV-SPECIFIC PREDATION
+./growth_info -parno 1.0 -PHI 0.2 -KAPPA_GOOD 40.0 -KAPPA_BAD 30.0 -CONST_GOOD 1.0 -CONST_BAD 2.0 -MU0 0.01 -MU1_GOOD 1.0 -MU1_BAD 1.0 -GAMMA 2.0 -PFOOD_GOOD 0.6 -PFOOD_BAD 0.4 &
+
+# ENV-SPECIFIC PREDATION: HIGHER IN LOW-FOOD ENVIRONMENT
+./growth_info -parno 2.0 -PHI 0.2 -KAPPA_GOOD 40.0 -KAPPA_BAD 30.0 -CONST_GOOD 1.0 -CONST_BAD 2.0 -MU0 0.01 -MU1_GOOD 1.0 -MU1_BAD 2.0 -GAMMA 2.0 -PFOOD_GOOD 0.6 -PFOOD_BAD 0.4 &
+
+# ENV-SPECIFIC PREDATION: HIGHER IN HIGH-FOOD ENVIRONMENT
+./growth_info -parno 3.0 -PHI 0.2 -KAPPA_GOOD 40.0 -KAPPA_BAD 30.0 -CONST_GOOD 1.0 -CONST_BAD 2.0 -MU0 0.01 -MU1_GOOD 2.0 -MU1_BAD 1.0 -GAMMA 2.0 -PFOOD_GOOD 0.6 -PFOOD_BAD 0.4
+
+# run all simulations 
+# 16 for each parameter combination: 
+# 1 = baseline; 2 & 3 = change priors; 4-10 = high food at different ages; 11-16 = low food at different ages
+# each set of 16 repeated with mortality (10,000 individuals) and without (100 individuals)
+
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.1 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.9 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 0 10
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 10 20 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 20 30 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 30 40 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 50 60 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 0 10 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 10 20
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 20 30 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 30 40 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 40 50 &
+./run_sim -parno 1 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 50 60 
+
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.1 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.9 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 0 10
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 10 20 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 20 30 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 30 40 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 50 60 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 0 10 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 10 20
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 20 30 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 30 40 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 40 50 &
+./run_sim -parno 1 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 50 60 
+
+
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.1 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.9 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 0 10
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 10 20 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 20 30 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 30 40 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 50 60 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 0 10 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 10 20
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 20 30 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 30 40 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 40 50 &
+./run_sim -parno 2 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 50 60 
+
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.1 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.9 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 0 10
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 10 20 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 20 30 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 30 40 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 50 60 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 0 10 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 10 20
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 20 30 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 30 40 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 40 50 &
+./run_sim -parno 2 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 50 60 
+
+
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.1 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.9 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 0 10
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 10 20 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 20 30 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 30 40 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 50 60 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 0 10 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 10 20
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 20 30 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 30 40 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 40 50 &
+./run_sim -parno 3 -nsims 1 -nind 10000 -mort 1 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 50 60 
+
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.1 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.9 -pfoodExpt 0.0 -exptAge 0 0 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 0 10
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 10 20 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 20 30 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 30 40 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 50 60 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.1 -exptAge 40 50 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 0 10 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 10 20
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 20 30 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 30 40 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 40 50 &
+./run_sim -parno 3 -nsims 1 -nind 100 -mort 0 -startPrior 0.5 -pfoodExpt 0.9 -exptAge 50 60 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
